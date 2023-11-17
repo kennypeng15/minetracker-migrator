@@ -18,11 +18,11 @@ data = data.rename(columns={'Total Clicks': 'total-clicks', 'Useful Clicks': 'us
 data = data.rename(columns={'Wasted Clicks': 'wasted-clicks'})
 # print(data)
 
-# calculate a solved percentage column, and filter down to only those that are >= 20% solved
+# calculate a solved percentage column, and filter down to only those that are >= 50% solved
 data["board-3bv"] = data["board-3bv"].apply(lambda x: float(x))
 data["completed-3bv"] = data["completed-3bv"].apply(lambda x: float(x))
 data["solve-percentage"] = (data["completed-3bv"] / data["board-3bv"]) * 100.0
-data = data[data["solve-percentage"] >= 20.0]
+data = data[data["solve-percentage"] >= 50.0]
 # print(data)
 
 # convert timestamps to timezoned, UTC timestamps
