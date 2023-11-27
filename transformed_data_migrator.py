@@ -5,6 +5,7 @@ import csv
 import sys
 from decimal import Decimal
 from dotenv import load_dotenv
+from time import sleep
 
 # TODO:
 # load necessary environment variables
@@ -64,7 +65,7 @@ with open(csv_name, newline='') as csvfile:
         # print(efficiency, solve_percentage)
         # print("---")
 
-# comment this out when you actually want to do the migration job!
+# uncomment this out when you actually want to do the migration job!
 '''
         table.put_item(
             Item={
@@ -84,4 +85,5 @@ with open(csv_name, newline='') as csvfile:
                 "solve-percentage": solve_percentage
             }
         )
+        sleep(0.25)
 '''
