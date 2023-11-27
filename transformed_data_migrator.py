@@ -12,6 +12,8 @@ from time import sleep
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
+item_count = 0
+
 # prompt user to input csv, read it in
 while(True):
     csv_name = input("Please input the path to a CSV file with transformed minesweeper game data: ")
@@ -24,8 +26,8 @@ while(True):
 with open(csv_name, newline='') as csvfile:
     reader = csv.DictReader(csvfile)
     # display how many rows, and ask for confirmation
-    row_count = sum(1 for row in reader)
-    confirmation = input("There are " + str(row_count) + " rows in the CSV. Continue? (y/n): ")
+    item_count = sum(1 for row in reader)
+    confirmation = input("There are " + str(item_count) + " rows in the CSV. Continue? (y/n): ")
     if confirmation.strip().lower() != "y":
         print("Confirmation was not supplied. Terminating.")
         sys.exit(0)
@@ -37,6 +39,7 @@ dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table(os.environ['DYNAMO_NAME'])
 
 # actually publish
+count_index = 1
 with open(csv_name, newline='') as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
@@ -65,8 +68,8 @@ with open(csv_name, newline='') as csvfile:
         # print(efficiency, solve_percentage)
         # print("---")
 
-# uncomment this out when you actually want to do the migration job!
-'''
+        # uncomment this out when you actually want to do the migration job!
+        '''
         table.put_item(
             Item={
                 "game-id": game_id,
@@ -85,5 +88,9 @@ with open(csv_name, newline='') as csvfile:
                 "solve-percentage": solve_percentage
             }
         )
-        sleep(0.25)
-'''
+        '''
+        print("published item " + str(count_index) + " of " + str(item_count))
+        count_index += 1
+        # sleep just to make sure dynamo doesn't get to the point of request throttling
+        # e.g., my table has 20 provisioned RCUs, so 1 (second) / 20 = 0.05 seems to make sense
+        sleep(0.05)
