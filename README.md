@@ -21,5 +21,8 @@ but not filtering out any data rows (included for testing purposes).
 
 As of 11/27/2023 (3:15PM CST), everything in this folder has been published.
 
+## Configuration
+A minimal `.env` file is expected.
+
 ## Invocation
 `python csv_transformer.py` or `transformed_data_migrator.py`, and then follow console prompts and instructions.
