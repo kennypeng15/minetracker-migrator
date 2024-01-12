@@ -1,5 +1,9 @@
 # minetracker-migrator
 ---
+
+(this README focuses on the migrator project only. for the write-up about MineTracker as a whole, 
+see https://kennypeng15.github.io/projects/minetracker/index.html)
+
 ## Overview and Design
 A python application that migrates existing CSV data about minesweeper games to DynamoDB.
 
